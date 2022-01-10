@@ -1,0 +1,30 @@
+.form-title {
+    font-weight: bold;
+    margin: 1.5em 0;
+    text-align: center;
+}
+
+.teacher_image {
+    width: 100%;
+    height: 100%;
+}
+
+.teacher_image img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.subject-item {
+    text-transform: capitalize;
+}
+
+.alphabet-filter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.alphabet-filter-item {
+    text-decoration: underline;
+    cursor: pointer;
+    color: blue;
+}

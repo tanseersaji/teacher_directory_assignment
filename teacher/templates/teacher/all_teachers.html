@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    {% if not no_teachers %}
+        <div class="row mb-3">
+            <div class="col-12 alphabet-filter">
+                <p 
+                        onclick="redirect_filter_param('last_name_filter', '')"
+                        class="alphabet-filter-item">
+                        [ALL]
+                    </p>
+                {% for letter in alphabet %}
+                    <p 
+                        onclick="redirect_filter_param('last_name_filter', '{{letter}}')"
+                        class="alphabet-filter-item">
+                        {{ letter }}
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12">
+                <!-- Filter by subjects taught -->
+                <div class="input-group">
+                    <select class="form-control" id="subjects_filter" name="subjects_filter">
+                        <option value="">All Subjects</option>
+                        {% for subject in subjects %}
+                            <option 
+                                value="{{ subject.name }}"
+                                {% if subjects_filter.0 == subject.name %}
+                                selected
+                                {% endif %}
+                                >{{ subject.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <script>
+
+                    const redirect_filter_param = (param, value) => {
+                        const new_url = new URL(window.location.href);
+                        new_url.searchParams.set(param, value);
+                        window.location.href = new_url;
+                    };
+
+                    document.getElementById('subjects_filter').addEventListener('change', (e) => {
+                        e.preventDefault();
+                        const subject = e.target.value;
+                        redirect_filter_param('subjects_filter', subject);
+                    });
+                </script>
+            </div>
+        </div>
+        
+        <div class="teacher_list">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sno</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for teacher in teachers %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ teacher.first_name }}</td>
+                            <td>{{ teacher.last_name }}</td>
+                            <td>{{ teacher.email }}</td>
+                            <td>{{ teacher.phone }}</td>
+                            <td>
+                                <a 
+                                    href="{% url 'view_teacher_details' teacher.id  %}" 
+                                    class="btn btn-primary">Teach</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <h1>No teachers found</h1>
+        <a href="{% url 'view_bulk_add_teachers' %}" class="btn btn-primary">
+            Add teachers in bulk
+        </a>
+    {% endif %}
+{% endblock %}
