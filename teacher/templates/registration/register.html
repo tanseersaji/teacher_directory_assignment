@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="" method="post">
+        {% if form.has_error %}
+            {{ form.errors }}
+        {% endif %}
+        <h1 class="form-title">Register</h1>
+        <div class="form-floating mb-3">
+            <input 
+                type="text" 
+                class="form-control" 
+                id="{{ form.username.id_for_label }}" 
+                placeholder="johndoe"
+                required
+                name="{{ form.username.name }}">
+
+            <label for="{{ form.email.auto_id }}">Username</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input 
+                type="email" 
+                class="form-control" 
+                id="{{ form.email.id_for_label }}" 
+                placeholder="johndoe"
+                required
+                name="{{ form.email.name }}">
+
+            <label for="{{ form.email.auto_id }}">Email</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input 
+                type="password" 
+                class="form-control" 
+                id="{{ form.password1.id_for_label }}" 
+                placeholder="*******"
+                required
+                name="{{ form.password1.name }}">
+            <label for="{{ form.password1.auto_id }}">Password</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input 
+                type="password" 
+                class="form-control" 
+                id="{{ form.password2.id_for_label }}" 
+                placeholder="*******"
+                required
+                name="{{ form.password2.name }}">
+            <label for="{{ form.password2.auto_id }}">Confirm Password</label>
+          </div>
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+{% endblock %}

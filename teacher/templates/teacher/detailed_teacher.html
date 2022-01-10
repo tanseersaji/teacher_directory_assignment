@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+    {% load static %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Teacher Details</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="teacher_details">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="teacher_image">
+                                {% if teacher.profile_image %}
+                                <img 
+                                    src="{{ teacher.profile_image.url }}" 
+                                    alt="{{ teacher.first_name }} {{ teacher.last_name }}">
+                                {% else %}
+                                <img 
+                                    src="{% static 'images/default_image.jpg' %}" 
+                                    alt="{{ teacher.first_name }} {{ teacher.last_name }}">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="teacher_details_info">
+                                <h2>{{ teacher.first_name }} {{ teacher.last_name }}</h2>
+                                <p>{{ teacher.email }}</p>
+                                <p>{{ teacher.phone }}</p>
+                                <p>Room Number: {{ teacher.room_number }}</p>
+                                <h3>Subjects Taught</h3>
+                                <ul>
+                                    {% for subject in teacher.subjects_taught.all %}
+                                        <li class="subject-item">{{ subject.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
